@@ -45,7 +45,7 @@ jobs:
                       arch: amd64
                       goos: windows
                       goarch: amd64
-                      binary_suffix: ".exe"
+                      binary_suffix: ""  # Apito CLI outputs same name for all platforms
 
         runs-on: ubuntu-latest
 
@@ -89,7 +89,7 @@ jobs:
               run: |
                   TAG="${{ github.event_name == 'workflow_dispatch' && github.event.inputs.version || github.ref_name }}"
                   ZIP_NAME="${{ env.PLUGIN_ID }}-${TAG}-${{ matrix.platform }}-${{ matrix.arch }}.zip"
-                  zip "$ZIP_NAME" "${{ env.BINARY_NAME }}${{ matrix.binary_suffix }}" config.yml
+                  zip "$ZIP_NAME" "${{ env.BINARY_NAME }}" config.yml
                   echo "zip_name=$ZIP_NAME" >> $GITHUB_OUTPUT
                   echo "📦 Created: $ZIP_NAME"
                   ls -lh "$ZIP_NAME"
